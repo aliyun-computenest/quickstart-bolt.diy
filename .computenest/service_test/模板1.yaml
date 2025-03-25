@@ -1,0 +1,11 @@
+caseId: stc-a0805745416c45e8af4c
+parameters:
+  BaiLianApiKey: ''
+  BaiLianConfig: true
+  EcsInstanceType: Please fill in
+  InstancePassword: $[iact3-auto]
+  PayType: PostPaid
+  VSwitchCidrBlock: 192.168.1.0/24
+  VpcCidrBlock: 192.168.0.0/16
+  VpcOption: NewVPC
+templateName: 模板1
