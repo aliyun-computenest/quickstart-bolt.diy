@@ -1,0 +1,61 @@
+Service:
+  RegionId: cn-hangzhou
+  DeployType: ros
+  DeployMetadata:
+    ServiceInstanceNameRule:
+      Prefix: bolt
+    SupplierDeployMetadata:
+      ArtifactRelation:
+        'centos_7_9_x64_20G_alibase_20240403.vhd':
+          ArtifactId: ${Artifact.EcsImage.ArtifactId}
+          ArtifactVersion: ${Artifact.EcsImage.ArtifactVersion}
+    TemplateConfigs:
+      - Name: 模板1
+        Url: 'ros_templates/template.yaml'
+  ServiceType: private
+  ServiceInfo:
+    Locale: zh-CN
+    ShortDescription: bolt.diy
+    Image: 'resources/icons/service_logo.png'
+Artifact:
+  EcsImage:
+    ArtifactType: EcsImage
+    ArtifactName: bolt.diy
+    Description: bolt.diy
+    ArtifactProperty:
+      RegionId: ${ImageBuilder.EcsImage.RegionId}
+      ImageId: ${ImageBuilder.EcsImage.SourceImageId}
+ImageBuilder:
+  EcsImage:
+    RegionId: ap-southeast-1
+    SourceImageId: centos_7_9_x64_20G_alibase_20240403.vhd
+    InstanceType: ecs.c6.large
+    InternetMaxBandwidthOut: 5
+    CommandType: RunShellScript
+    Timeout: 10800
+    Tags: [ ]
+    CommandContent: |-
+      #!/bin/bash
+      yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+      yum makecache fast
+      yum install -y git
+      yum -y install docker-ce jq
+      systemctl enable docker
+      systemctl start docker
+      
+      # Download and install nvm:
+      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
+      # in lieu of restarting the shell
+      \. "$HOME/.nvm/nvm.sh"
+      # Download and install Node.js:
+      nvm install 22
+      # Verify the Node.js version:
+      node -v # Should print "v22.14.0".
+      nvm current # Should print "v22.14.0".
+      # Verify npm version:
+      npm -v # Should print "10.9.2".
+  
+      cd /root/
+      git clone -b stable https://github.com/stackblitz-labs/bolt.diy
+      cd bolt.diy
+      docker build . --target bolt-ai-development
