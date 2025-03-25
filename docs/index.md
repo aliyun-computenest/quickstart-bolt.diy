@@ -1,24 +1,19 @@
-# Demo服务实例部署文档
+# Bolt.Diy服务实例部署文档
 
 ## 概述
-
-`(服务概述内容)`。
-
-```
-eg：
-
-Demo服务是计算巢提供的示例。
-本文向您介绍如何开通计算巢上的`Demo`服务，以及部署流程和使用说明。
-```
+![img.png](img.png)
+Bolt.diy是 Bolt.new 的官方开源版本，Bolt.new是一个AI驱动的Web开发Agent, 支持直接从浏览器编写Prompt，运行，编辑和部署全栈应用程序, 而无需本地设置。Bolt.diy有以下优势
+- 支持多种大模型，包括OpenAI， Anthropic, Ollama, OpenRouter, Gemini, LMStudio, Mistral, xAI, HuggingFace， DeepSeek、OpenAILike等。
+- 支持将代码恢复到以前的版本
+- 支持在Prompt中添加图片
+- 支持将项目下载到本地
+- 支持Docker快速部署
+- 支持集成的terminal,方便页面调试
+- 有活跃的社区支持
 
 ## 计费说明
 
-`(计费说明内容)`
-
-```
-eg:
-
-Demo在计算巢上的费用主要涉及：
+Bolt.diy在计算巢上的费用主要涉及：
 
 - 所选vCPU与内存规格
 - 系统盘类型及容量
@@ -29,36 +24,13 @@ Demo在计算巢上的费用主要涉及：
 - 按量付费（小时）
 - 包年包月
 
-目前提供如下实例：
+百炼模型调用费用:
+当您首次开通百炼时，平台会自动为您发放各模型的新人专属免费额度，详情请看[百炼新人免费额度](https://help.aliyun.com/zh/model-studio/new-free-quota?spm=5176.24779694.console-base_help.dexternal.6ab44d22erpR17#view-quota)。
 
-| 规格族 | vCPU与内存 | 系统盘 | 公网带宽 |
-| --- | --- | --- | --- |
-| ecs.r6.xlarge | 内存型r6，4vCPU 32GiB | ESSD云盘 200GiB PL0 | 固定带宽1Mbps |
-
-预估费用在创建实例时可实时看到。
-如需更多规格、其他服务（如集群高可用性要求、企业级支持服务等），请联系我们 [mailto:xx@xx.com](mailto:xx@xx.com)。
-
-```
 
 ## 部署架构
-
-`(部署概述内容)`
-
-## RAM账号所需权限
-
-`(权限策略内容)`
-
-```
-eg: 
-
-Demo服务需要对ECS、VPC等资源进行访问和创建操作，若您使用RAM用户创建服务实例，需要在创建服务实例前，对使用的RAM用户的账号添加相应资源的权限。添加RAM权限的详细操作，请参见[为RAM用户授权](https://help.aliyun.com/document_detail/121945.html)。所需权限如下表所示。
-
-
-| 权限策略名称 | 备注 |
-| --- | --- |
-| AliyunECSFullAccess | 管理云服务器服务（ECS）的权限 |
-
-```
+部署架构采用ECS(云服务器)单机部署
+![img_1.png](img_1.png)`(部署概述内容)`
 
 ## 部署流程
 

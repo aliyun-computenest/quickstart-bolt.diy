@@ -58,4 +58,5 @@ ImageBuilder:
       cd /root/
       git clone -b stable https://github.com/stackblitz-labs/bolt.diy
       cd bolt.diy
+      mv .env.example .env.local
       docker build . --target bolt-ai-development
