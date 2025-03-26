@@ -35,35 +35,50 @@ Bolt.diy在计算巢上的费用主要涉及：
 ## 部署流程
 
 ### 部署步骤
-
-
+1. 访问计算巢Bolt.diy社区版[部署链接](https://computenest.console.aliyun.com/user/cn-hangzhou/serviceInstanceCreate?ServiceId=service-21dc43d5daec42c4b6fc)
+按提示填写部署参数,配置ECS实例规格和密码
+  ![img_2.png](img_2.png) 
+2. 配置专有网络和可用区
+![img_3.png](img_3.png)
+3. 配置百炼模型服务，Bolt.diy支持多种大模型，如果想使用百炼的模型服务，请配置百炼模型服务的API-KEY。请参考： [获取百炼API-KEY](https://developer.aliyun.com/article/1655158?spm=5176.24779694.0.0.5c4b4d22bk6NwY)。
+![img_4.png](img_4.png)
 ### 验证结果
 
-`(验证结果内容)`
-
-```
-eg:
-
 1. 查看服务实例。服务实例创建成功后，部署时间大约需要2分钟。部署完成后，页面上可以看到对应的服务实例。 
-2. 通过服务实例访问TuGraph。进入到对应的服务实例后，可以在页面上获取到web、rpc、ssh共3种使用方式。
-```
+2. 通过服务实例访问Bolt.diy。进入到对应的服务实例后，可以在页面上获取到访问地址，注意：Bolt.diy页面加载较慢，请耐心等待。
 
 ### 使用说明
 
-`(服务使用说明内容)`
+#### 配置浏览器的安全策略
+如果使用Bolt.diy的过程中，页面有如下报错,
+![img_10.png](img_10.png)
+这是由于浏览器对 SharedArrayBuffer 的安全策略限制导致的，浏览器出于安全考虑，要求使用 SharedArrayBuffer 或多线程通信（如 postMessage 传输 SharedArrayBuffer）的页面必须满足 Cross-Origin Isolation 条件，比如
+页面的加载协议为 HTTPS（或 localhost 的开发环境）。为了绕开此限制，可以通过修改浏览器的设置。
+1. 在Chrome浏览器中，访问标志页：在地址栏输入 chrome://flags/#allow-insecure-localhost。
+2. 启用配置：将 Insecure origins treated as secure 的选项设为 Enabled， 在下方输入框中添加Bolt.diy的访问地址
+![img_5.png](img_5.png)
+3. 修改完配置后，重新启动浏览器即可。
 
 ```
-eg:
 
-请访问Demo官网了解如何使用：[使用文档](https://www.aliyun.com)
+修改此配置的核心效果是允许将 HTTP 资源视为 HTTPS，会将指定的不安全起源（HTTP） 视为安全的 HTTPS 起源，从而
+1.绕过混合内容（Mixed Content）警告：
+  当网页通过 HTTPS 加载时，如果它引用了 HTTP 协议的资源（如图片、脚本、API 接口等），浏览器会默认阻止这些资源并报错（如 Mixed Content 错误）。开启此配置后，指定的 HTTP 起源会被视为安全，从而允许加载。
+2.支持需要 HTTPS 的功能：
+  部分 Web API（如 Fetch API、WebAuthn、WebSockets 等）在 HTTP 环境下可能无法使用，但通过此设置，指定的 HTTP 起源可以绕过这一限制。
 ```
 
-## 问题排查
-
-`(服务使用说明内容)`
-
+#### 配置使用百炼的模型
+前提：在部署时已经配置过了百炼的API-KEY
+1. 打开侧边栏，点击左下角的设置
+![img_6.png](img_6.png)
+2. 设置中点击"Local Providers"
+![img_7.png](img_7.png)
+3. 打开"OpenAILike"的开关
+![img_8.png](img_8.png)
+4. 在首页选择OpenAILike，即可使用百炼上的大模型服务
+![img_9.png](img_9.png)
+Demo官网了解如何使用：[使用文档](https://www.aliyun.com)
 ```
-eg:
 
-请访问[Demo的问题排查链接](https://www.aliyun.com)获取帮助。
-```
+
