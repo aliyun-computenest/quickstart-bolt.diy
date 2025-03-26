@@ -28,9 +28,10 @@ Artifact:
 ImageBuilder:
   EcsImage:
     RegionId: ap-southeast-1
-    SourceImageId: centos_7_9_x64_20G_alibase_20240403.vhd
+    SystemDiskSize: 20
+    SourceImageId: aliyun_3_x64_20G_alibase_20240819.vhd
     InstanceType: ecs.c6.large
-    InternetMaxBandwidthOut: 5
+    InternetMaxBandwidthOut: 10
     CommandType: RunShellScript
     Timeout: 10800
     Tags: [ ]
@@ -40,7 +41,7 @@ ImageBuilder:
       yum check-update
       yum -y upgrade --security
       yum -y upgrade-minimal
-    
+  
       # 安装docker-ce
       yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
       yum makecache
@@ -54,11 +55,11 @@ ImageBuilder:
              }
          ]
       }' > /etc/docker/daemon.json
-    
+      
       prefixChinaRegion="cn-"
         region=$(curl -s http://100.100.100.200/latest/meta-data/region-id)
-      
-      if [[ ${region} == ${prefixChinaRegion}* && ${region} != "cn-hongkong" ]]; then
+
+        if [[ ${region} == ${prefixChinaRegion}* && ${region} != "cn-hongkong" ]]; then
           echo '{
               "default-address-pools": [
                   {
@@ -72,8 +73,8 @@ ImageBuilder:
           }' > /etc/docker/daemon.json
         fi
 
-      sudo systemctl enable --now docker.socket
-      sudo systemctl enable --now docker.service
+        sudo systemctl enable --now docker.socket
+        sudo systemctl enable --now docker.service
       
       # Download and install nvm:
       curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
