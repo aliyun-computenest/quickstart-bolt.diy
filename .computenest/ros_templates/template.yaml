@@ -321,6 +321,21 @@ Resources:
             -e 's|^OPENAI_LIKE_API_KEY=.*$|OPENAI_LIKE_API_KEY=${ApiKey}|' .env.local
 
             docker compose --profile development up -d
+            MAX_TIMEOUT=1800
+            INTERVAL=10
+            MAX_ATTEMPTS=$((MAX_TIMEOUT / INTERVAL))
+            
+            for ((i=1; i<=MAX_ATTEMPTS; i++))
+              do
+                LATEST_LOG=$(docker logs mcpo-service 2>&1 | tail -n 10)
+                if echo "$LATEST_LOG" | grep -q "Uvicorn running on http://0.0.0.0:8000"
+                  then
+                    echo "success"
+                    break
+                  else
+                    sleep $INTERVAL
+              fi
+            done
           - ApiKey:
               Fn::Jq:
                 - First
