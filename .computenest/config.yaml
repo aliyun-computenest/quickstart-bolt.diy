@@ -15,11 +15,14 @@ Service:
   ServiceType: private
   ServiceInfo:
   - Locale: zh-CN
-    Name: aliyun-computenest/quickstart-bolt.diy-i2f2
-    ShortDescription: Service description
-    Image: 
-      https://service-info-public.oss-cn-hangzhou.aliyuncs.com/1853370294850618/service-image/bfd30cc4-e959-4093-b5cb-77a05058b911.png
-    Softwares: []
+    Name: Bolt.diy社区版
+    ShortDescription: 
+Bolt.diy是 Bolt.new 的官方开源版本，Bolt.new是一个AI驱动的Web开发Agent, 支持直接从浏览器编写Prompt，运行，编辑和部署全栈应用程序, 而无需本地设置。功能丰富，支持多种大模型，支持将代码恢复到以前的版本，支持集成的terminal,方便页面调试，且有活跃的社区。
+    Image: https://service-info-public.oss-cn-hangzhou.aliyuncs.com/1853370294850618/service-image/40463309-ca64-4688-a9e5-9f184f68b91a.png
+    Softwares: 
+    - Locale: zh-CN
+      Name: bolt.diy
+      Version: v1.0.0
 Artifact:
   EcsImage:
     ArtifactType: EcsImage
@@ -33,8 +36,8 @@ ImageBuilder:
     RegionId: ap-southeast-1
     SystemDiskSize: 20
     SourceImageId: aliyun_3_x64_20G_alibase_20240819.vhd
-    InstanceType: ecs.c6.large
-    InternetMaxBandwidthOut: 10
+    InstanceType: ecs.c7.2xlarge
+    InternetMaxBandwidthOut: 100
     CommandType: RunShellScript
     Timeout: 10800
     Tags: []
