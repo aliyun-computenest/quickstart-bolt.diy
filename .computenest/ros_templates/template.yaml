@@ -219,6 +219,7 @@ Parameters:
       Fn::Equals:
         - true
         - ${BaiLianConfig}
+    AssociationProperty: ALIYUN::Bailian::ApiKey::ApiKeyInfo
     AssociationPropertyMetadata:
       Visible:
         Condition:
@@ -260,6 +261,11 @@ Resources:
       SecurityGroupIngress:
         - PortRange: 5173/5173
           Priority: 1
+          SourceCidrIp: 100.104.0.0/16
+          IpProtocol: tcp
+          NicType: internet
+        - PortRange: 443/443
+          Priority: 1
           SourceCidrIp: 0.0.0.0/0
           IpProtocol: tcp
           NicType: internet
@@ -294,7 +300,7 @@ Resources:
         Ref: EcsInstanceType
       SystemDiskCategory: cloud_essd
       SystemDiskSize: 200
-      InternetMaxBandwidthOut: 5
+      InternetMaxBandwidthOut: 10
       IoOptimized: optimized
       MaxAmount: 1
   RunInstallCommand:
@@ -312,25 +318,28 @@ Resources:
           - |
             cd bolt.diy
             sed -i -e 's|^OPENAI_LIKE_API_BASE_URL=.*$|OPENAI_LIKE_API_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1/|' \
-            -e 's|^OPENAI_LIKE_API_KEY=.*$|OPENAI_LIKE_API_KEY=${BaiLianApiKey}|' .env.local
+            -e 's|^OPENAI_LIKE_API_KEY=.*$|OPENAI_LIKE_API_KEY=${ApiKey}|' .env.local
 
             docker compose --profile development up -d
-          - RegionId:
-              Ref: ALIYUN::Region
+          - ApiKey:
+              Fn::Jq:
+                - First
+                - .Key
+                - Ref: BaiLianApiKey
 Outputs:
-  dify:
+  Bolt.diy:
     Description:
-      zh-cn: dify应用入口
-      en: Dify Addresses
-    Value:
-      Fn::Sub:
-        - 'http://${ServerAddress}:5173'
-        - ServerAddress:
+      zh-cn: Bolt.diy应用入口
+      en: Bolt.diy Addresses
+    Value: 
+      Fn::Sub:        
+        - http://${IpAddress}:5173
+        - IpAddress:
             Fn::Select:
               - 0
               - Fn::GetAtt:
                   - InstanceGroup
-                  - PublicIps
+                  - PrivateIps
 Metadata:
   ALIYUN::ROS::Interface:
     ParameterGroups:
