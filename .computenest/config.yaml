@@ -17,6 +17,10 @@ Service:
     Locale: zh-CN
     ShortDescription: bolt.diy
     Image: 'resources/icons/service_logo.png'
+    SoftWares:
+    - Locale: zh-CN
+      Name: Bolt.diy
+      Version: v1.0.0
 Artifact:
   EcsImage:
     ArtifactType: EcsImage
@@ -41,40 +45,40 @@ ImageBuilder:
       yum check-update
       yum -y upgrade --security
       yum -y upgrade-minimal
-  
+      
       # 安装docker-ce
       yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
       yum makecache
       yum install -y curl git docker-ce
       mkdir -p /etc/docker/
       echo '{
-         "default-address-pools": [
-             {
-                 "base": "10.255.0.0/16",
-                 "size": 24
-             }
-         ]
+          "default-address-pools": [
+              {
+                  "base": "10.255.0.0/16",
+                  "size": 24
+              }
+          ]
       }' > /etc/docker/daemon.json
       
       prefixChinaRegion="cn-"
-        region=$(curl -s http://100.100.100.200/latest/meta-data/region-id)
-
-        if [[ ${region} == ${prefixChinaRegion}* && ${region} != "cn-hongkong" ]]; then
-          echo '{
-              "default-address-pools": [
-                  {
-                      "base": "10.255.0.0/16",
-                      "size": 24
-                  }
-              ],
-              "registry-mirrors": [
-                  "https://mirrors-ssl.aliyuncs.com/"
-              ]
-          }' > /etc/docker/daemon.json
-        fi
-
-        sudo systemctl enable --now docker.socket
-        sudo systemctl enable --now docker.service
+      region=$(curl -s http://100.100.100.200/latest/meta-data/region-id)
+      
+      if [[ ${region} == ${prefixChinaRegion}* && ${region} != "cn-hongkong" ]]; then
+        echo '{
+            "default-address-pools": [
+                {
+                    "base": "10.255.0.0/16",
+                    "size": 24
+                }
+            ],
+            "registry-mirrors": [
+                "https://mirrors-ssl.aliyuncs.com/"
+            ]
+        }' > /etc/docker/daemon.json
+      fi
+      
+      sudo systemctl enable --now docker.socket
+      sudo systemctl enable --now docker.service
       
       # Download and install nvm:
       curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
@@ -89,7 +93,13 @@ ImageBuilder:
       npm -v # Should print "10.9.2".
   
       cd /root/
-      git clone -b stable https://github.com/stackblitz-labs/bolt.diy
+      git clone  https://github.com/stackblitz-labs/bolt.diy
+      git switch -c feature-1.0.0 tags/v1.0.0
       cd bolt.diy
       mv .env.example .env.local
+      npm run dockerbuild
+      
+      sed -i '/define:/i \    server: { allowedHosts: ["aliyun-workbench.com"], },' vite.config.ts
+      
       docker build . --target bolt-ai-development
+      
