@@ -10,17 +10,16 @@ Service:
           ArtifactId: ${Artifact.EcsImage.ArtifactId}
           ArtifactVersion: ${Artifact.EcsImage.ArtifactVersion}
     TemplateConfigs:
-      - Name: 模板1
-        Url: 'ros_templates/template.yaml'
+    - Name: 模板1
+      Url: 'ros_templates/template.yaml'
   ServiceType: private
   ServiceInfo:
-    Locale: zh-CN
-    ShortDescription: bolt.diy
-    Image: 'resources/icons/service_logo.png'
-    SoftWares:
-    - Locale: zh-CN
-      Name: Bolt.diy
-      Version: v1.0.0
+  - Locale: zh-CN
+    Name: aliyun-computenest/quickstart-bolt.diy-i2f2
+    ShortDescription: Service description
+    Image: 
+      https://service-info-public.oss-cn-hangzhou.aliyuncs.com/1853370294850618/service-image/bfd30cc4-e959-4093-b5cb-77a05058b911.png
+    Softwares: []
 Artifact:
   EcsImage:
     ArtifactType: EcsImage
@@ -38,14 +37,14 @@ ImageBuilder:
     InternetMaxBandwidthOut: 10
     CommandType: RunShellScript
     Timeout: 10800
-    Tags: [ ]
+    Tags: []
     CommandContent: |-
       #!/bin/bash
       # 升级基础组件：
       yum check-update
       yum -y upgrade --security
       yum -y upgrade-minimal
-      
+
       # 安装docker-ce
       yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
       yum makecache
@@ -59,10 +58,10 @@ ImageBuilder:
               }
           ]
       }' > /etc/docker/daemon.json
-      
+
       prefixChinaRegion="cn-"
       region=$(curl -s http://100.100.100.200/latest/meta-data/region-id)
-      
+
       if [[ ${region} == ${prefixChinaRegion}* && ${region} != "cn-hongkong" ]]; then
         echo '{
             "default-address-pools": [
@@ -76,10 +75,10 @@ ImageBuilder:
             ]
         }' > /etc/docker/daemon.json
       fi
-      
+
       sudo systemctl enable --now docker.socket
       sudo systemctl enable --now docker.service
-      
+
       # Download and install nvm:
       curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
       # in lieu of restarting the shell
@@ -91,15 +90,15 @@ ImageBuilder:
       nvm current # Should print "v22.14.0".
       # Verify npm version:
       npm -v # Should print "10.9.2".
-  
+
       cd /root/
       git clone  https://github.com/stackblitz-labs/bolt.diy
       git switch -c feature-1.0.0 tags/v1.0.0
       cd bolt.diy
       mv .env.example .env.local
       npm run dockerbuild
-      
+
       sed -i '/define:/i \    server: { allowedHosts: ["aliyun-workbench.com"], },' vite.config.ts
-      
+
       docker build . --target bolt-ai-development
-      
+
