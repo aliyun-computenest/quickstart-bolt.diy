@@ -104,4 +104,5 @@ ImageBuilder:
       sed -i '/define:/i \    server: { allowedHosts: ["aliyun-workbench.com"], },' vite.config.ts
 
       docker build . --target bolt-ai-development
+      docker compose --profile development up -d
 
