@@ -95,8 +95,7 @@ ImageBuilder:
       npm -v # Should print "10.9.2".
 
       cd /root/
-      git clone  https://github.com/stackblitz-labs/bolt.diy
-      git switch -c feature-1.0.0 tags/v1.0.0
+      git clone  https://github.com/wangxuqi/bolt.diy.git
       cd bolt.diy
       mv .env.example .env.local
       npm run dockerbuild
