@@ -1,0 +1,12 @@
+templateName: 模板1
+regionId: ap-southeast-1
+parameters:
+  BaiLianApiKey: ""
+  BaiLianConfig: true
+  VpcCidrBlock: "192.168.0.0/16"
+  VpcOption: "NewVPC"
+  PayType: "PostPaid"
+  EcsInstanceType: "Please fill in"
+  VSwitchCidrBlock: "192.168.1.0/24"
+  InstancePassword: "$[iact3-auto]"
+caseId: stc-1f9cdfafb02046698ac1

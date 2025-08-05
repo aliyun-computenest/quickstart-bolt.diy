@@ -16,13 +16,22 @@ Service:
   ServiceInfo:
   - Locale: zh-CN
     Name: Bolt.diy社区版
-    ShortDescription: "Bolt.diy是 Bolt.new 的官方开源版本，Bolt.new是一个AI驱动的Web开发Agent, 支持直接从浏览器编写Prompt，运行，编辑和部署全栈应用程序,
-      而无需本地设置。功能丰富，支持多种大模型，支持将代码恢复到以前的版本，支持集成的terminal,方便页面调试，且有活跃的社区。\n"
+    ShortDescription: Bolt.diy是 Bolt.new 的官方开源版本，Bolt.new是一个AI驱动的Web开发Agent, 支持直接从浏览器编写Prompt，运行，编辑和部署全栈应用程序,
+      而无需本地设置。功能丰富，支持多种大模型，支持将代码恢复到以前的版本，支持集成的terminal,方便页面调试，且有活跃的社区。
     Image: 
-      https://service-info-public.oss-cn-hangzhou.aliyuncs.com/1853370294850618/service-image/40463309-ca64-4688-a9e5-9f184f68b91a.png
-    Softwares:
-    - Name: Bolt.diy
-      Version: v0.0.7
+      https://service-info-public.oss-cn-hangzhou.aliyuncs.com/5141674772595072/service-image/034250fd-3af8-4883-9db0-db5568b2866b.png
+    Softwares: []
+  - Locale: en-US
+    Name: Bolt.diy Community Edition
+    ShortDescription: Bolt.diy is the official open-source version of Bolt.new. Bolt.new
+      is an AI-driven Web development Agent that supports writing prompts directly
+      from a browser, running, editing, and deploying full-stack applications without
+      local Settings. It is rich in functions, supports multiple large models, can
+      restore code to previous versions, has an integrated terminal for convenient
+      page debugging, and has an active community.
+    Image: 
+      https://service-info-public.oss-cn-hangzhou.aliyuncs.com/5141674772595072/service-image/034250fd-3af8-4883-9db0-db5568b2866b.png
+    Softwares: []
 Artifact:
   EcsImage:
     ArtifactType: EcsImage
