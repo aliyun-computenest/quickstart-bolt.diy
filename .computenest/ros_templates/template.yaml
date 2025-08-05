@@ -132,6 +132,15 @@ Parameters:
         InstanceTypeFamily:
           - ecs.u1
           - ecs.e
+        Memory: 
+          - 4
+          - 8
+          - 12
+          - 16
+          - 24
+          - 32
+          - 48
+          - 64
   InstancePassword:
     NoEcho: true
     Type: String
@@ -269,6 +278,39 @@ Resources:
           SourceCidrIp: 0.0.0.0/0
           IpProtocol: tcp
           NicType: internet
+  SuperOpsUser:
+    Type: 'ALIYUN::RAM::User'
+    Properties:
+      UserName:
+        'Fn::Join':
+        - '-'
+        - - SuperOps
+          - Ref: ALIYUN::StackName
+      Policies:
+      - PolicyName:
+          'Fn::Join':
+          - '-'
+          - - BoltSuperOpsPolicy
+            - Ref: 'ALIYUN::StackName'
+        PolicyDocument:
+          Version: '1'
+          Statement:
+          - Effect: Allow
+            Action:
+            - 'gpdb:*'
+            Resource:
+            - '*'
+      PolicyAttachments:
+        System:
+        - AliyunSTSAssumeRoleAccess
+        - AliyunRAMReadOnlyAccess
+  AccessKey:
+    Type: 'ALIYUN::RAM::AccessKey'
+    Properties:
+      UserName:
+        'Fn::GetAtt':
+        - SuperOpsUser
+        - UserName
   InstanceGroup:
     Type: ALIYUN::ECS::InstanceGroup
     Properties:
@@ -316,31 +358,50 @@ Resources:
       CommandContent:
         Fn::Sub:
           - |
+            cat > /etc/systemd/system/quickstart-bolt.service <<EOF
+            [Unit]
+            Description=Docker Compose Application Service
+            Requires=docker.service
+            After=docker.service
+
+            [Service]
+            Type=oneshot
+            RemainAfterExit=yes
+            WorkingDirectory=/root/bolt.diy
+            ExecStart=/usr/bin/docker compose --profile development up -d
+            ExecStop=/usr/bin/docker compose down
+            TimeoutStartSec=0
+
+            [Install]
+            WantedBy=multi-user.target
+            EOF
+
             cd bolt.diy
             sed -i -e 's|^OPENAI_LIKE_API_BASE_URL=.*$|OPENAI_LIKE_API_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1/|' \
-            -e 's|^OPENAI_LIKE_API_KEY=.*$|OPENAI_LIKE_API_KEY=${ApiKey}|' .env.local
+            -e 's|^OPENAI_LIKE_API_KEY=.*$|OPENAI_LIKE_API_KEY=${ApiKey}|' \
+            -e 's|^ALIBABA_CLOUD_REGION_ID=.*$|ALIBABA_CLOUD_REGION_ID=${Region}|' \
+            -e 's|^TONGYI_API_KEY=.*$|TONGYI_API_KEY=${ApiKey}|' \
+            -e 's|^ALIBABA_CLOUD_ACCESS_KEY_ID=.*$|ALIBABA_CLOUD_ACCESS_KEY_ID=${AccessKey}|' \
+            -e 's|^ALIBABA_CLOUD_ACCESS_KEY_SECRET=.*$|ALIBABA_CLOUD_REGION_ID=${AccessKeySecret}|' .env.local
 
-            docker compose --profile development up -d
-            MAX_TIMEOUT=1800
-            INTERVAL=10
-            MAX_ATTEMPTS=$((MAX_TIMEOUT / INTERVAL))
-            
-            for ((i=1; i<=MAX_ATTEMPTS; i++))
-              do
-                LATEST_LOG=$(docker logs mcpo-service 2>&1 | tail -n 10)
-                if echo "$LATEST_LOG" | grep -q "Uvicorn running on http://0.0.0.0:8000"
-                  then
-                    echo "success"
-                    break
-                  else
-                    sleep $INTERVAL
-              fi
-            done
+
+            systemctl enable quickstart-bolt
+            systemctl start quickstart-bolt
           - ApiKey:
               Fn::Jq:
                 - First
                 - .Key
                 - Ref: BaiLianApiKey
+            Region:
+              Ref: ALIYUN::Region
+            AccessKey:
+              Fn::GetAtt:
+                - AccessKey
+                - AccessKeyId
+            AccessKeySecret:
+              Fn::GetAtt:
+                - AccessKey
+                - AccessKeySecret
 Outputs:
   Bolt.diy:
     Description:
