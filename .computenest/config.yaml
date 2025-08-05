@@ -109,7 +109,7 @@ ImageBuilder:
       mv .env.example .env.local
       npm run dockerbuild
 
-      sed -i '/define:/i \    server: { allowedHosts: ["aliyun-workbench.com"], },' vite.config.ts
+      sed -i '/define:/i \    server: { allowedHosts: ["aliyun-workbench.com","alibabacloud-workbench.com"], },' vite.config.ts
 
       docker build . --target bolt-ai-development
       docker compose --profile development up -d
