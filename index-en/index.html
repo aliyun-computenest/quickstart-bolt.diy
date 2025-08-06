@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="计算巢是阿里云开放给企业应用服务商的服务管理平台。服务商能够在计算巢上发布私有化部署服务，为其客户提供云上软件一键部署的能力；同时也支持全托管模式的服务，赋能服务商托管其客户资源。">
+  <title>Bolt.Diy Service Instance Deployment Documentation - Aliyun 计算巢 x Demo</title>
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="../css/theme.css">
+  
+
+  
+
+  
+  
+
+  
+    <script src="../search/main.js"></script>
+  
+
+  
+
+  <script src="../js/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="nav-inner">
+        <div class="logo">
+          <img src="./img/logo-2x.png">
+        </div>
+        <div class="nav-list">
+          <ul>
+          
+              <li><a href="#boltdiy-service-instance-deployment-documentation">Bolt.Diy Service Instance Deployment Documentation</a></li>
+              
+                  <li><a href="#overview">Overview</a></li>
+                  
+              
+                  <li><a href="#billing-description">Billing Description</a></li>
+                  
+              
+                  <li><a href="#deployment-architecture">Deployment Architecture</a></li>
+                  
+              
+                  <li><a href="#deployment-process">Deployment process</a></li>
+                  
+                      <li class="li-h3"><a href="#deployment-steps">Deployment steps</a></li>
+                  
+                      <li class="li-h3"><a href="#validation-results">Validation Results</a></li>
+                  
+                      <li class="li-h3"><a href="#instructions-for-use">Instructions for use</a></li>
+                  
+              
+          
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="content theme-github">
+      
+      <div class="content-inner">        
+        
+        <h1 id="boltdiy-service-instance-deployment-documentation">Bolt.Diy Service Instance Deployment Documentation</h1>
+<h2 id="overview">Overview</h2>
+<p><img alt="img.png" src="../images-en/img.png" />
+Bolt.diy is the official open source version of Bolt.new, an AI-driven Web development agent that supports writing Prompt, running, editing, and deploying full-stack applications directly from the browser without local setup. Bolt.diy has the following advantages
+-Supports multiple large models including OpenAI, Anthropic, Ollama, OpenRouter, Gemini, LMStudio, Mistral, xAI, HuggingFace, DeepSeek, OpenAILike, etc.
+-Support to restore code to previous version
+-Support adding pictures in Prompt
+-Support to download projects to local
+-Support for Docker rapid deployment
+-Support integrated terminal for easy page debugging
+-Active community support</p>
+<h2 id="billing-description">Billing Description</h2>
+<p>The cost of Bolt.diy in calculating the nest mainly involves:</p>
+<p>-Selected vCPU and memory specifications
+-System disk type and capacity
+-public network bandwidth</p>
+<p>Billing methods include:</p>
+<p>-Pay-As-You-Go (hours)
+-Package year and package month</p>
+<p>Refined model call cost:
+When you open the 100-year-old for the first time, the platform will automatically issue you the exclusive free quota for new people of each model. For details, please see <a href="https://help.aliyun.com/zh/model-studio/new-free-quota?spm = 5176.24779694.console-# view-quota">100-year-old free quota</a>.</p>
+<h2 id="deployment-architecture">Deployment Architecture</h2>
+<p>The deployment architecture adopts ECS (cloud server) stand-alone deployment
+<img alt="img_1.png" src="../images-en/img_1.png" />'(Deployment overview content)'</p>
+<h2 id="deployment-process">Deployment process</h2>
+<h3 id="deployment-steps">Deployment steps</h3>
+<ol>
+<li>Visit the computing nest Bolt.diy Community Edition <a href="https://computenest.console.aliyun.com/user/cn-hangzhou/serviceInstanceCreate?ServiceId=service-21dc43d5daec42c4b6fc">Deployment Link</a>
+Enter the deployment parameters as prompted, and configure the ECS instance type and password.
+<img alt="img_2.png" src="../images-en/img_2.png" /></li>
+<li>Configure the VPC and zone
+<img alt="img_3.png" src="../images-en/img_3.png" /></li>
+<li>Configure the Bailian model service. Bolt.diy supports a variety of large models. If you want to use the Bailian model service, configure the Bailian model service API-KEY. Please refer to: <a href="https://developer.aliyun.com/article/1655158?spm = 5176.24779694.0.0.5 c4b4d22bk6NwY">Get Refined API-KEY</a>.
+<img alt="img_4.png" src="../images-en/img_4.png" /></li>
+</ol>
+<h3 id="validation-results">Validation Results</h3>
+<ol>
+<li>View the service instance. After the service instance is created successfully, the deployment time takes about 2 minutes. After the deployment is complete, the corresponding service instance is displayed on the page.</li>
+<li>Access Bolt.diy through the service instance. After entering the corresponding service instance, you can obtain the access address on the page. Note: Bolt.diy page loads slowly, please wait patiently.</li>
+</ol>
+<h3 id="instructions-for-use">Instructions for use</h3>
+<h4 id="configure-the-model-using-refined">Configure the model using Refined</h4>
+<p>Premise: The API-KEY has been configured at the time of deployment.
+1. Open the sidebar and click Settings in the lower left corner
+<img alt="img_6.png" src="../images-en/img_6.png" />
+2. Click "Local Providers" in Settings"
+<img alt="img_7.png" src="../images-en/img_7.png" />
+3. Turn on the "OpenAILike" switch
+<img alt="img_8.png" src="../images-en/img_8.png" />
+4. Select OpenAILike on the home page to use the large model service on Bailian.
+<img alt="img_9.png" src="../images-en/img_9.png" />
+Demo official website to learn how to use: <a href="https://www.aliyun.com">use documents</a>
+'''</p>
+        
+      </div>
+
+      <div class="copyrights">© 2009-2022 Aliyun.com 版权所有</div>
+    </div>
+  </div>
+  
+  <!--
+  MkDocs version      : 1.6.1
+  Docs Build Date UTC : 2025-08-06 03:46:16.528558+00:00
+  -->
+</body>
+</html>
