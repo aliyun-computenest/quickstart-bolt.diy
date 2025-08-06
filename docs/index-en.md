@@ -49,25 +49,6 @@ Enter the deployment parameters as prompted, and configure the ECS instance type
 
 ### Instructions for use
 
-#### Configure your browser's security policy
-If the process of using Bolt.diy, the page has the following error,
-![img_10.png](images-en/img_10.png)
-This is due to the browser's security policy restrictions on the SharedArrayBuffer. For security reasons, the browser requires that pages that use SharedArrayBuffer or multi-thread communication (such as postMessage transmission SharedArrayBuffer) must meet the Cross-Origin Isolation conditions, such
-The loading protocol of the page is HTTPS (or localhost development environment). To get around this restriction, you can modify the browser's settings.
-1. In the Chrome browser, access the flags page: enter chrome:// flags/#allow-insecure-localhost in the address bar.
-2. Enable configuration: Set the option of Insecure origins treated as secure to Enabled, and add the access address of Bolt.diy in the input box below.
-![img_5.png](images-en/img_5.png)
-3. After modifying the configuration, restart the browser.
-
-'''
-
-The core effect of modifying this configuration is to allow HTTP resources to be treated as HTTPS, treating the specified Unsecure Origin (HTTP) as a secure HTTPS origin, and thus
-1. Bypass Mixed Content warning:
-When a web page is loaded via HTTPS, if it references HTTP protocol resources (such as pictures, scripts, API interfaces, etc.), the browser will block these resources by default and report an error (such as Mixed Content error). When this configuration is turned on, the specified HTTP origin is considered safe, allowing loading.
-2. Support functions that require HTTPS:
-Some web APIs (such as Fetch APIs, WebAuthn, WebSockets, etc.) may not be available in the HTTP environment, but with this setting, the specified HTTP origin can bypass this restriction.
-'''
-
 #### Configure the model using Refined
 Premise: The API-KEY has been configured at the time of deployment.
 1. Open the sidebar and click Settings in the lower left corner
