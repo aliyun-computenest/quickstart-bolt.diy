@@ -28,16 +28,13 @@ Refined model call cost:
 When you open the 100-year-old for the first time, the platform will automatically issue you the exclusive free quota for new people of each model. For details, please see [100-year-old free quota](https://help.aliyun.com/zh/model-studio/new-free-quota?spm = 5176.24779694.console-# view-quota).
 
 
-## Deployment Architecture
-The deployment architecture adopts ECS (cloud server) stand-alone deployment
-![img_1.png](images-en/img_1.png)'(Deployment overview content)'
 
 ## Deployment process
 
 ### Deployment steps
 1. Visit the computing nest Bolt.diy Community Edition [Deployment Link](https://computenest.console.aliyun.com/user/cn-hangzhou/serviceInstanceCreate?ServiceId=service-21dc43d5daec42c4b6fc)
 Enter the deployment parameters as prompted, and configure the ECS instance type and password.
-![img_2.png](images-en/img_2.png)
+
 2. Configure the VPC and zone
 ![img_3.png](images-en/img_3.png)
 3. Configure the Bailian model service. Bolt.diy supports a variety of large models. If you want to use the Bailian model service, configure the Bailian model service API-KEY. Please refer to: [Get Refined API-KEY](https://developer.aliyun.com/article/1655158?spm = 5176.24779694.0.0.5 c4b4d22bk6NwY).
